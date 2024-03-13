@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        /* Add your CSS styles here to make the page look good and minimal */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            padding: 10px;
+        }
+
+        .navbar-logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .navbar-link {
+            text-decoration: none;
+            color: #fff;
+            padding: 5px;
+        }
+
+        .navbar-link:hover {
+            background-color: #666;
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 800px;
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            width: 200px; /* Set the width to make the cards square */
+            height: 200px; /* Set the height to make the cards square */
+            transition: box-shadow 0.6s ease-in-out; /* Add transition for smooth effect */
+            background-color: #f2f2f2; /* Change background color to light gray */
+        }
+
+        .card:hover {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add subtle shadow on hover */
+            background-color: #fff; /* Change background color on hover to white */
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333; /* Change text color of the card title */
+        }
+
+        .card-details {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666; /* Change text color of the card details */
+        }
+
+        .card-description {
+            margin-top: 10px;
+            color: #666; /* Change text color of the card description */
+        }
+
+        .skill-required {
+            display: inline-block;
+            background-color: #ccc;
+            border-radius: 10px;
+            padding: 5px 10px;
+            margin-top: 5px;
+            color: #fff; /* Change text color of the skill required label */
+        }
+
+        .logout-button {
+            background-color: #666;
+            border-radius: 5px;
+            padding: 5px 10px;
+            color: #fff;
+            transition: background-color 0.3s ease-in-out; /* Add transition for smooth effect */
+        }
+
+        .logout-button:hover {
+            background-color: #333; /* Change background color on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="navbar-logo">Cosmowork</div>
+        <div class="navbar-links">
+            <a href="#" class="navbar-link">Jobs</a>
+            <a href="/profile" class="navbar-link">Profile</a>
+            <form action="/logout" method="post">
+                <button class="navbar-link logout-button" >Logout</button>
+            </form>
+        </div>
+    </div>
+    <h3>{{msg}}</h3>
+
+    <div class="card-container">
+        <!-- Repeat the following card structure for each job -->
+        {% for job in data %}
+        <div class="card">
+            <div class="card-title">{{ job[1] }}</div>
+            <div class="card-details">
+                <div class="card-description">{{ job[2] }}</div>
+                <!-- <div class="skill-required">{{ job[3] }}</div> -->
+                {% for skill in skills %}
+
+                
+                {% if skill[0] == job[0] %}
+                <span class="skill-required">{{skill[1]}}</span>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+
+        
+        <!-- Repeat the above card structure for each job -->
+    </div>
+    {{skills}}
+    <script>
+        function logout() {
+            // Add your logout logic here
+        }
+    </script>
+</body>
+
+</html>

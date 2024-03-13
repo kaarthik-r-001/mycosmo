@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        form {
+            width: 300px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-group button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #45a049;
+        }
+        .skills-container {
+            margin-bottom: 15px;
+        }
+        .skills-container input {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .skills-container button {
+            padding: 5px 10px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .skills-container button:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <form id="jobForm" >
+        <div class="form-group">
+            <label for="jobTitle">Job Title:</label>
+            <input type="text" id="jobTitle" name="jobTitle">
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description"></textarea>
+        </div>
+        <div class="skills-container">
+            <label for="skills">Skills:</label>
+            <div id="skillsContainer">
+                <input type="text" class="skill" name="skills[]">
+                <button type="button" onclick="removeSkill(this)">Remove</button>
+            </div>
+            <button type="button" onclick="addSkill()">Add Skill</button>
+        </div>
+        <div class="form-group">
+            <button type="button" onclick="sendJobDetails()">Submit</button>
+        </div>
+    </form>
+
+    <script>
+        function addSkill() {
+            var skillsContainer = document.getElementById('skillsContainer');
+            var skillInput = document.createElement('input');
+            skillInput.type = 'text';
+            skillInput.className = 'skill';
+            skillInput.name = 'skills[]';
+            skillsContainer.appendChild(skillInput);
+
+            var removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.textContent = 'Remove';
+            removeButton.onclick = function() {
+                removeSkill(this);
+            };
+            skillsContainer.appendChild(removeButton);
+        }
+
+        function removeSkill(button) {
+            var skillInput = button.previousSibling;
+            skillInput.remove();
+            button.remove();
+        }
+
+        function sendJobDetails(){
+            var jobTitle = document.getElementById('jobTitle').value;
+            var description = document.getElementById('description').value;
+            var skills = [];
+            var skillInputs = document.getElementsByClassName('skill');
+            for (var i = 0; i < skillInputs.length; i++) {
+                skills.push(skillInputs[i].value);
+            }
+            console.log(skills);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/addjob', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({jobTitle: jobTitle, description: description, skills: skills}));
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    alert(xhr.responseText)
+                }
+            };
+        }
+    </script>
+</body>
+</html>

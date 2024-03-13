@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .profile {
+            width: 300px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .profile h2 {
+            margin: 0 0 15px 0;
+            text-align: center;
+        }
+        .profile p {
+            margin: 0 0 10px 0;
+        }
+        .profile ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .profile ul li {
+            padding: 5px 0;
+            border-bottom: 1px solid #ccc;
+        }
+        .profile ul li:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile">
+        <h2>Profile</h2>
+        <p><strong>Username:</strong> {{data[0]}}</p>
+        <p><strong>Name:</strong> {{data[1]}}</p>
+        <p><strong>Email:</strong> {{data[2]}} </p>
+        <h2>Skills</h2>
+        <ul>
+            {% for skill in skills %}
+                <li>{{ skill[0] }}</li>
+            {% endfor %}
+            <!-- Add more skills as needed -->
+        </ul>
+    </div>
+</body>
+</html>
